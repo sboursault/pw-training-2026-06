@@ -1,12 +1,8 @@
-import { expect, test } from "@playwright/test";
-import { ProductPage } from "../support/pom/page-produit";
+import { test, expect } from "../support/fixtures";
 
 test.describe("Ajout au panier", () => {
 
-
- test("Ajout un produit depuis la page produit", async ({ page }) => {
-    const productPage = new ProductPage(page);
-
+  test("Ajout un produit depuis la page produit", async ({ productPage }) => {
     await productPage.goto("i-robot_5");
 
     await productPage.attendrePanierVide();
