@@ -1,19 +1,20 @@
 import { expect, test } from "@playwright/test";
+import { ProductPage } from "../support/pom/page-produit";
 
 test.describe("Ajout au panier", () => {
-  test("Ajout un produit depuis la page produit", async ({ page }) => {
-    await page.goto("/fr/catalogue/i-robot_5/");
 
-    const boutonPanier = page
-      .locator("header")
-      .getByRole("button", { name: "Panier" });
 
-    await expect(boutonPanier).toHaveText(/^\s*Panier\s*$/);
+ test("Ajout un produit depuis la page produit", async ({ page }) => {
+    const productPage = new ProductPage(page);
 
-    await page.getByRole("button", { name: "Ajouter au panier" }).click();
+    await productPage.goto("i-robot_5");
 
-    await expect(page.getByText("a été ajouté à votre panier.")).toBeVisible();
+    await productPage.attendrePanierVide();
 
-    await expect(boutonPanier).toContainText("(1)");
+    await productPage.ajouterAuPanier();
+
+    await productPage.attendreConfirmationAjout();
+
+    await productPage.attendreNombreArticles(1);
   });
 });
