@@ -15,7 +15,7 @@ export class ProductPage {
     this.page = page;
     this.boutonPanier = page
       .locator("header")
-      .getByRole("button", { name: "Panier" });
+      .getByRole("button", { name: /Panier|Basket/ });
     this.boutonAjouter = page.getByRole("button", {
       name: "Ajouter au panier",
     });
