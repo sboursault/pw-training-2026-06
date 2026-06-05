@@ -3,6 +3,7 @@ import { HomePage } from './pom/page-accueil';
 import { PageLogin } from './pom/page-login';
 import { ProductPage } from './pom/page-produit';
 import { BasketApi } from './api/basket-api';
+import { Workflow } from './workflow';
 
 
 
@@ -12,6 +13,7 @@ export interface PageFixtures {
   loginPage: PageLogin;
   productPage: ProductPage;
   basketApi: BasketApi;
+  workflow: Workflow;
 }
 
 // Extend the base test with custom fixtures
@@ -32,8 +34,13 @@ export const test = base.extend<PageFixtures>({
   },
 
   basketApi: async ({ request }, use) => {
-    const basketApi = new BasketApi();
+    const basketApi = new BasketApi(request);
     await use(basketApi);
+  },
+
+  workflow: async ({ page, homePage, loginPage }, use) => {
+    const workflow = new Workflow(page, homePage, loginPage);
+    await use(workflow);
   },
 });
 

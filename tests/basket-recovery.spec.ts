@@ -2,12 +2,9 @@ import { test, expect } from "../support/fixtures";
 
 test.describe("Récupération du panier", () => {
   test("Le panier est restauré après déconnexion/reconnexion", async ({
-    page,
-    request,
-    homePage,
-    loginPage,
     productPage,
     basketApi,
+    workflow,
   }) => {
     // vide le panier via API
     await basketApi.clearBasket("tom@test.test", "tom@test.test");
@@ -17,9 +14,7 @@ test.describe("Récupération du panier", () => {
     await productPage.attendrePanierVide();
 
     // je me connecte
-    await homePage.gotoLogin();
-    await loginPage.login("tom@test.test", "tom@test.test");
-    await expect(homePage.welcomeMessage).toBeVisible();
+    await workflow.login("tom@test.test", "tom@test.test");
 
     // j'ajoute un produit au panier
     await productPage.goto("i-robot_5");
@@ -30,18 +25,14 @@ test.describe("Récupération du panier", () => {
     await productPage.attendreNombreArticles(1);
 
     // je me déconnecte
-    await page.goto("/fr/catalogue/");
-    await page.getByRole("button", { name: "tom@test.test" }).click();
-    await page.getByRole("link", { name: /déconnexion|sign out/i }).click();
+    await workflow.logout();
 
     // -> mon panier est vide
     await productPage.goto("i-robot_5");
     await productPage.attendrePanierVide();
 
     // je me reconnecte
-    await homePage.gotoLogin();
-    await loginPage.login("tom@test.test", "tom@test.test");
-    await expect(homePage.welcomeMessage).toBeVisible();
+    await workflow.login("tom@test.test", "tom@test.test");
 
     // -> mon panier contient un produit
     await productPage.attendreNombreArticles(1);
