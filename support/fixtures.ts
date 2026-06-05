@@ -5,6 +5,7 @@ import { ProductPage } from './pom/page-produit';
 import { BasketPage } from './pom/page-panier';
 import { BasketApi } from './api/basket-api';
 import { ProductApi } from './api/product-api';
+import { UserApi } from './api/user-api';
 import { Workflow } from './workflow';
 
 
@@ -17,6 +18,7 @@ export interface PageFixtures {
   basketPage: BasketPage;
   basketApi: BasketApi;
   productApi: ProductApi;
+  userApi: UserApi;
   workflow: Workflow;
 }
 
@@ -50,6 +52,11 @@ export const test = base.extend<PageFixtures>({
   productApi: async ({ request }, use) => {
     const productApi = new ProductApi(request);
     await use(productApi);
+  },
+
+  userApi: async ({ request }, use) => {
+    const userApi = new UserApi(request);
+    await use(userApi);
   },
 
   workflow: async ({ page, homePage, loginPage }, use) => {

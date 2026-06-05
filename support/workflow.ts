@@ -19,9 +19,9 @@ export class Workflow {
     this.page.locator('header').getByText('tom@test.test').isVisible()*/
   }
 
-  async logout() {
+  async logout(username: string) {
     await this.page.goto("/fr/catalogue/");
-    await this.page.getByRole("button", { name: "tom@test.test" }).click();
+    await this.page.getByRole("button", { name: username }).click();
     await this.page.getByRole("link", { name: /déconnexion|sign out/i }).click();
   }
   

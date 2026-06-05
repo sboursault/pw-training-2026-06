@@ -14,8 +14,8 @@ export class HomePage {
     return this.page.getByText(/bienvenue/i);
   }
 
-  get userEmail() {
-    return this.page.getByText('tom@test.test');
+  getUserEmailButton(email: string) {
+    return this.page.getByText(email);
   }
 
 }
