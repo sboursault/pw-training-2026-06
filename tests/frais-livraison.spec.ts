@@ -38,4 +38,32 @@ test.describe("Frais de livraison", () => {
     // Vérifier que les frais de livraison sont de 7,00 €
     await basketPage.attendreLivraisonPayante();
   });
+
+  test("Livraison gratuite avec produit API à 30€", async ({
+    productApi,
+    productPage,
+    basketPage,
+  }) => {
+    // Créer un produit à 30€ via API
+    const response = await productApi.createProduct(
+      "Livre à 30€",
+      "livre-30e-test",
+      30,
+      "sku-livre-30e-" + Date.now()
+    );
+
+    // Récupérer l'id du produit
+    const productId = (await response.json()).id;
+
+    // Aller sur la page du produit et l'ajouter au panier
+    await productPage.goto("livre-30e-test_" + productId);
+    await productPage.ajouterAuPanier();
+    await productPage.attendreConfirmationAjout();
+
+    // Aller sur la page panier
+    await basketPage.goto();
+
+    // Vérifier que la livraison est gratuite
+    await basketPage.attendreLivraisonGratuite();
+  });
 });

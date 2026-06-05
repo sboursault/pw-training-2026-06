@@ -4,6 +4,7 @@ import { PageLogin } from './pom/page-login';
 import { ProductPage } from './pom/page-produit';
 import { BasketPage } from './pom/page-panier';
 import { BasketApi } from './api/basket-api';
+import { ProductApi } from './api/product-api';
 import { Workflow } from './workflow';
 
 
@@ -15,6 +16,7 @@ export interface PageFixtures {
   productPage: ProductPage;
   basketPage: BasketPage;
   basketApi: BasketApi;
+  productApi: ProductApi;
   workflow: Workflow;
 }
 
@@ -43,6 +45,11 @@ export const test = base.extend<PageFixtures>({
   basketApi: async ({ request }, use) => {
     const basketApi = new BasketApi(request);
     await use(basketApi);
+  },
+
+  productApi: async ({ request }, use) => {
+    const productApi = new ProductApi(request);
+    await use(productApi);
   },
 
   workflow: async ({ page, homePage, loginPage }, use) => {
