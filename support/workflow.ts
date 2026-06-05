@@ -10,9 +10,13 @@ export class Workflow {
   ) {}
 
   async login(username: string, password: string) {
-    await this.homePage.gotoLogin();
-    await this.loginPage.login(username, password);
-    await expect(this.homePage.welcomeMessage).toBeVisible();
+    await this.page.request.post('/api/login/', {
+      headers: { 'content-type': 'application/json' },
+      data: { username, password },
+      failOnStatusCode: true,
+    });
+    /*await this.page.goto("/fr/catalogue/");
+    this.page.locator('header').getByText('tom@test.test').isVisible()*/
   }
 
   async logout() {

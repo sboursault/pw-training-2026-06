@@ -35,6 +35,7 @@ test.describe("Récupération du panier", () => {
     await workflow.login("tom@test.test", "tom@test.test");
 
     // -> mon panier contient un produit
+    await productPage.goto("i-robot_5");
     await productPage.attendreNombreArticles(1);
   });
 });
