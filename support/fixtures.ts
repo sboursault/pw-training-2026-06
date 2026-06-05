@@ -2,6 +2,7 @@ import { test as base } from '@playwright/test';
 import { HomePage } from './pom/page-accueil';
 import { PageLogin } from './pom/page-login';
 import { ProductPage } from './pom/page-produit';
+import { BasketPage } from './pom/page-panier';
 import { BasketApi } from './api/basket-api';
 import { Workflow } from './workflow';
 
@@ -12,6 +13,7 @@ export interface PageFixtures {
   homePage: HomePage;
   loginPage: PageLogin;
   productPage: ProductPage;
+  basketPage: BasketPage;
   basketApi: BasketApi;
   workflow: Workflow;
 }
@@ -31,6 +33,11 @@ export const test = base.extend<PageFixtures>({
   productPage: async ({ page }, use) => {
     const productPage = new ProductPage(page);
     await use(productPage);
+  },
+
+  basketPage: async ({ page }, use) => {
+    const basketPage = new BasketPage(page);
+    await use(basketPage);
   },
 
   basketApi: async ({ request }, use) => {
