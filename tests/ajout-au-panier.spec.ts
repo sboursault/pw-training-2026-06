@@ -1,4 +1,4 @@
-import { test, expect } from "../support/fixtures";
+import { test } from "../support/fixtures";
 
 test.describe("Ajout au panier", () => {
 

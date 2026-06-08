@@ -1,4 +1,4 @@
-import { test, expect } from "../support/fixtures";
+import { test } from "../support/fixtures";
 
 test.describe("Récupération du panier", () => {
   test("Le panier est restauré après déconnexion/reconnexion", async ({
@@ -7,7 +7,6 @@ test.describe("Récupération du panier", () => {
     userApi,
     workflow,
   }) => {
-
     const user = `user${new Date().getTime()}@my-domain.com`;
     const password = `user${new Date().getTime()}@my-domain.com`;
 
